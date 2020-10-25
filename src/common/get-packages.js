@@ -6,12 +6,14 @@ const log = debug('housekeeping:get-packages')
 
 log('`housekeeping:get-packages` is awake')
 
-export default function getPackages (dir) {
+export default function getPackages (directory) {
   log('getPackages')
 
   return (
     new Promise((resolve, reject) => {
-      glob(`${dir}/*/package.json`, (e, a) => (!e) ? resolve(a) : reject(e))
+      const pattern = `${directory}/*/package.json`
+
+      glob(pattern, (e, a) => (!e) ? resolve(a) : reject(e))
     })
   )
 }

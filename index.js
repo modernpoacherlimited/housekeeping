@@ -8,9 +8,9 @@ const debug = require('debug')
 
 const psList = require('ps-list')
 
+const { default: P } = require('./src/package')
 const { default: D } = require('./src/depsrc')
 const { default: E } = require('./src/eslintrc')
-const { default: P } = require('./src/package')
 
 const {
   env: {
@@ -112,11 +112,11 @@ async function app () {
     author = AUTHOR
   } = commander
 
+  await P(dir, author)
+
   await D(dir)
 
   await E(dir)
-
-  await P(dir, author)
 }
 
 module.exports = app()

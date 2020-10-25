@@ -1,10 +1,5 @@
 import debug from 'debug'
 
-import {
-  dirname,
-  resolve
-} from 'path'
-
 import glob from 'glob-all'
 
 import {
@@ -12,26 +7,28 @@ import {
   writeFile
 } from 'fs/promises'
 
-import getPackages from './get-packages'
+import transform from './common/transform'
+
+import getPackages from './common/get-packages'
 
 const log = debug('housekeeping:depsrc')
 
 log('`housekeeping:depsrc` is awake')
-
-const transform = (p) => resolve(dirname(p))
 
 function getFileGlob (p) {
   log('getFileGlob')
 
   return (
     new Promise((resolve, reject) => {
-      glob(`${p}/.depsrc`, (e, a) => (!e) ? resolve(a) : reject(e))
+      const pattern = `${p}/.depsrc`
+
+      glob(pattern, (e, a) => (!e) ? resolve(a) : reject(e))
     })
   )
 }
 
 async function execute (p) {
-  log('execute', p)
+  log('execute')
 
   let s = await readFile(p, 'utf8')
   let o = JSON.parse(s)
@@ -59,7 +56,7 @@ async function execute (p) {
 }
 
 async function recurse ([p, ...a]) {
-  log('recurse', p)
+  log('recurse')
 
   const array = await getFileGlob(p)
 
@@ -68,8 +65,10 @@ async function recurse ([p, ...a]) {
   if (a.length) await recurse(a)
 }
 
-export default async function app (dir) {
-  const array = await getPackages(dir)
+export default async function app (directory) {
+  log('app')
+
+  const array = await getPackages(directory)
 
   await recurse(array.map(transform))
 }

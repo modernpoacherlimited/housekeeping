@@ -9,7 +9,7 @@ import {
   writeFile
 } from 'fs/promises'
 
-import getPackages from './get-packages'
+import getPackages from './common/get-packages'
 
 const log = debug('housekeeping:package')
 
@@ -18,7 +18,7 @@ log('`housekeeping:package` is awake')
 const transform = (v) => resolve(v) // constrain to one arg
 
 async function execute (p, AUTHOR) {
-  log('execute', p)
+  log('execute')
 
   let s = await readFile(p, 'utf8')
   let o = JSON.parse(s)
@@ -77,8 +77,10 @@ async function execute (p, AUTHOR) {
   await writeFile(p, s, 'utf8')
 }
 
-export default async function app (dir, author) {
-  const array = await getPackages(transform(dir))
+export default async function app (directory, author) {
+  log('app')
+
+  const array = await getPackages(transform(directory))
 
   await Promise.all(array.map(transform).map((p) => execute(p, author)))
 }
