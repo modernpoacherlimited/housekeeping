@@ -20,7 +20,7 @@ function getFileGlob (p) {
 
   return (
     new Promise((resolve, reject) => {
-      const pattern = `${p}/.depsrc`
+      const pattern = [`${p}/.depsrc`, `${p}/.depsrc.json`]
 
       glob(pattern, (e, a) => (!e) ? resolve(a) : reject(e))
     })
