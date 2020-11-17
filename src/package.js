@@ -17,7 +17,7 @@ log('`housekeeping:package` is awake')
 
 const transform = (v) => resolve(v) // constrain to one arg
 
-async function execute (p, AUTHOR) {
+async function execute (p, AUTHOR, REGEXP) {
   log('execute')
 
   let s = await readFile(p, 'utf8')
@@ -56,7 +56,7 @@ async function execute (p, AUTHOR) {
     ...(isPrivate ? { private: isPrivate } : {}),
     ...(main ? { main } : {}),
     ...(types ? { types } : {}),
-    ...(author ? (typeof author === 'string' && author.startsWith('Jonathan Perry')) ? { author: AUTHOR } : { author } : {}),
+    ...(author ? (typeof author === 'string' && REGEXP.test(author)) ? { author: AUTHOR } : { author } : {}),
     ...(contributors ? { contributors } : {}),
     ...(license ? { license } : {}),
     ...(engines ? { engines } : {}),
@@ -77,10 +77,10 @@ async function execute (p, AUTHOR) {
   await writeFile(p, s, 'utf8')
 }
 
-export default async function app (directory, author) {
+export default async function app (directory, author, regExp) {
   log('app')
 
   const array = await getPackages(transform(directory))
 
-  await Promise.all(array.map(transform).map((p) => execute(p, author)))
+  await Promise.all(array.map(transform).map((p) => execute(p, author, new RegExp(regExp))))
 }

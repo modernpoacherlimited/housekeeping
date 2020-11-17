@@ -94,6 +94,7 @@ async function app () {
     argv,
     env: {
       DIR = '..',
+      REGEXP = '^Jonathan Perry',
       AUTHOR = getPackageAuthor(),
       VERSION = getPackageVersion()
     }
@@ -103,16 +104,18 @@ async function app () {
 
   commander
     .version(VERSION)
-    .option('-j, --dir [dir]', 'Root directory path')
+    .option('-d, --dir [dir]', 'Directory path')
     .option('-a, --author [author]', 'Package author')
+    .option('-r, --regexp [regexp]', 'Package author regular expression')
     .parse(argv)
 
   const {
     dir = DIR,
-    author = AUTHOR
+    author = AUTHOR,
+    regexp = REGEXP
   } = commander
 
-  await P(dir, author)
+  await P(dir, author, regexp)
 
   await D(dir)
 
