@@ -106,7 +106,7 @@ async function app () {
     .version(VERSION)
     .option('-d, --dir [dir]', 'Directory path')
     .option('-a, --author [author]', 'Package author')
-    .option('-r, --regexp [regexp]', 'Package author regular expression')
+    .option('-r, --regexp [regexp]', 'A regular expression with which to match the package author')
     .parse(argv)
 
   const {
