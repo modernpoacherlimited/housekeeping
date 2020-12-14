@@ -14,7 +14,7 @@
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.12.10",
     "@babel/register": "^7.12.10",
-    "commander": "^6.2.0",
+    "commander": "^6.2.1",
     "debug": "^4.3.1",
     "dotenv": "^8.2.0",
     "glob-all": "^3.2.1",
