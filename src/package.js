@@ -1,13 +1,21 @@
 import debug from 'debug'
 
 import {
-  resolve
+  resolve,
+  dirname,
+  join
 } from 'path'
 
 import {
   readFile,
   writeFile
 } from 'fs/promises'
+
+import ensureDir from 'ensureDir'
+
+import {
+  exec
+} from 'child_process'
 
 import getPackages from './common/get-packages'
 
@@ -17,7 +25,13 @@ log('`housekeeping:package` is awake')
 
 const transform = (v) => resolve(v) // constrain to one arg
 
-async function execute (p, AUTHOR, REGEXP) {
+const ensure = async (p) => (
+  new Promise((resolve, reject) => {
+    ensureDir(p, 755, (e) => !e ? resolve() : reject(e))
+  })
+)
+
+async function execute (p, AUTHOR, REGEXP, d) {
   log('execute')
 
   let s = await readFile(p, 'utf8')
@@ -71,8 +85,28 @@ async function execute (p, AUTHOR, REGEXP) {
     ...(devDependencies ? { devDependencies } : {}),
     ...(peerDependencies ? { peerDependencies } : {}),
     ...rest,
-    ...(_moduleAliases ? { _moduleAliases } : {}),
-    ...(husky ? { husky } : {})
+    ...(_moduleAliases ? { _moduleAliases } : {}) /* ,
+    ...(husky ? { husky } : {}) */
+  }
+
+  if (husky) {
+    const {
+      hooks = {}
+    } = husky
+
+    const h = resolve(join(dirname(p), '.husky'))
+
+    await ensure(h)
+
+    await Promise.all(Array.from(Object.entries(hooks)).map(([key, value]) => (
+      new Promise((resolve) => {
+        exec(`npx husky add "${h}/${key}" "${value}"`, (e) => {
+          if (e) log(`Error at "${h}/${key}"`)
+
+          resolve()
+        })
+      }))
+    ))
   }
 
   s = JSON.stringify(o, null, 2).concat('\n')
@@ -84,5 +118,5 @@ export default async function app (directory, author, regExp) {
 
   const array = await getPackages(transform(directory))
 
-  await Promise.all(array.map(transform).map((p) => execute(p, author, new RegExp(regExp))))
+  await Promise.all(array.map(transform).map((p) => execute(p, author, new RegExp(regExp), directory)))
 }
