@@ -113,7 +113,7 @@ async function app () {
     dir = DIR,
     author = AUTHOR,
     regexp = REGEXP
-  } = commander
+  } = commander.opts()
 
   await P(dir, author, regexp)
 
