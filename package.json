@@ -12,7 +12,7 @@
   "dependencies": {
     "@babel/core": "^7.14.0",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
-    "@babel/preset-env": "^7.14.0",
+    "@babel/preset-env": "^7.14.1",
     "@babel/register": "^7.13.16",
     "commander": "^7.2.0",
     "debug": "^4.3.1",
