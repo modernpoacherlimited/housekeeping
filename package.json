@@ -16,7 +16,7 @@
     "@babel/register": "^7.13.16",
     "commander": "^7.2.0",
     "debug": "^4.3.1",
-    "dotenv": "^9.0.0",
+    "dotenv": "^9.0.1",
     "ensureDir": "^1.0.6",
     "glob-all": "^3.2.1",
     "ps-list": "^7.2.0"
