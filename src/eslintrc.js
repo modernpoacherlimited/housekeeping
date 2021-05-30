@@ -20,7 +20,14 @@ function getFileGlob (p) {
 
   return (
     new Promise((resolve, reject) => {
-      const patterns = [`${p}/**/.eslintrc`, `!${p}/node_modules/**/.eslintrc`]
+      const patterns = [
+        `${p}/.eslintrc`,
+        `${p}/**/*/.eslintrc`,
+        `!${p}/node_modules/.eslintrc`,
+        `!${p}/node_modules/**/*/.eslintrc`,
+        `!${p}/**/*/node_modules/.eslintrc`,
+        `!${p}/**/*/node_modules/**/*/.eslintrc`
+      ]
 
       glob(patterns, (e, a) => (!e) ? resolve(a) : reject(e))
     })
@@ -30,35 +37,39 @@ function getFileGlob (p) {
 async function execute (p) {
   log('execute')
 
-  let s = await readFile(p, 'utf8')
-  let o = JSON.parse(s)
+  try {
+    let s = await readFile(p, 'utf8')
+    let o = JSON.parse(s)
 
-  const {
-    extends: doesExtend,
-    env,
-    parser,
-    parserOptions,
-    plugins,
-    rules,
-    overrides,
-    settings,
-    ...rest
-  } = o
+    const {
+      extends: doesExtend,
+      env,
+      parser,
+      parserOptions,
+      plugins,
+      rules,
+      overrides,
+      settings,
+      ...rest
+    } = o
 
-  o = {
-    ...(doesExtend ? { extends: doesExtend } : {}),
-    ...(env ? { env } : {}),
-    ...(parser ? { parser } : {}),
-    ...(parserOptions ? { parserOptions } : {}),
-    ...(plugins ? { plugins } : {}),
-    ...(rules ? { rules } : {}),
-    ...(overrides ? { overrides } : {}),
-    ...(settings ? { settings } : {}),
-    ...rest
+    o = {
+      ...(doesExtend ? { extends: doesExtend } : {}),
+      ...(env ? { env } : {}),
+      ...(parser ? { parser } : {}),
+      ...(parserOptions ? { parserOptions } : {}),
+      ...(plugins ? { plugins } : {}),
+      ...(rules ? { rules } : {}),
+      ...(overrides ? { overrides } : {}),
+      ...(settings ? { settings } : {}),
+      ...rest
+    }
+
+    s = JSON.stringify(o, null, 2).concat('\n')
+    await writeFile(p, s, 'utf8')
+  } catch ({ message = 'No error message defined' }) {
+    log(message)
   }
-
-  s = JSON.stringify(o, null, 2).concat('\n')
-  await writeFile(p, s, 'utf8')
 }
 
 async function recurse ([p, ...a]) {
