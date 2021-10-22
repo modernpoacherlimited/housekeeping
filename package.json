@@ -10,7 +10,7 @@
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
-    "commander": "^8.2.0",
+    "commander": "^8.3.0",
     "debug": "^4.3.2",
     "dotenv": "^10.0.0",
     "glob-all": "^3.2.1",
