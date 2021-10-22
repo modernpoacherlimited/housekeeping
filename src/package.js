@@ -44,6 +44,8 @@ async function execute (p, AUTHOR, REGEXP, d) {
     dependencies,
     devDependencies,
     peerDependencies,
+    imports,
+    exports,
     _moduleAliases,
     husky,
     ...rest
@@ -71,6 +73,8 @@ async function execute (p, AUTHOR, REGEXP, d) {
     ...(devDependencies ? { devDependencies } : {}),
     ...(peerDependencies ? { peerDependencies } : {}),
     ...rest,
+    ...(imports ? { imports } : {}),
+    ...(exports ? { exports } : {}),
     ...(_moduleAliases ? { _moduleAliases } : {}),
     ...(husky ? { husky } : {})
   }
