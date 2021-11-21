@@ -2,16 +2,14 @@ import debug from 'debug'
 
 import glob from 'glob-all'
 
-import {
-  readFile,
-  writeFile
-} from 'fs/promises'
+import transform from './common/transform.mjs'
 
-import transform from './common/transform'
+import getPackage from './common/get-package.mjs'
+import setPackage from './common/set-package.mjs'
+import getPackages from './common/get-packages.mjs'
 
-import getPackages from './common/get-packages'
-
-const log = debug('housekeeping:eslintrc')
+const log = debug('housekeeping')
+const info = debug('housekeeping:eslintrc')
 
 log('`housekeeping:eslintrc` is awake')
 
@@ -38,10 +36,10 @@ async function execute (p) {
   log('execute')
 
   try {
-    let s = await readFile(p, 'utf8')
-    let o = JSON.parse(s)
+    info(p)
 
     const {
+      root,
       extends: doesExtend,
       env,
       parser,
@@ -51,9 +49,10 @@ async function execute (p) {
       overrides,
       settings,
       ...rest
-    } = o
+    } = await getPackage(p)
 
-    o = {
+    await setPackage(p, {
+      ...(root ? { root } : {}),
       ...(doesExtend ? { extends: doesExtend } : {}),
       ...(env ? { env } : {}),
       ...(parser ? { parser } : {}),
@@ -63,10 +62,7 @@ async function execute (p) {
       ...(overrides ? { overrides } : {}),
       ...(settings ? { settings } : {}),
       ...rest
-    }
-
-    s = JSON.stringify(o, null, 2).concat('\n')
-    await writeFile(p, s, 'utf8')
+    })
   } catch ({ message = 'No error message defined' }) {
     log(message)
   }
