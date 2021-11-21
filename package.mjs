@@ -12,7 +12,7 @@ async function app () {
     env: {
       DIR = '..',
       AUTHOR = getPackageAuthor(PACKAGE),
-      DEBUG = 'housekeeping*'
+      DEBUG = 'housekeeping'
     }
   } = process
 

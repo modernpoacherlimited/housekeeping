@@ -19,7 +19,7 @@ import E from './src/eslintrc.mjs'
 
 const {
   env: {
-    DEBUG = 'housekeeping*'
+    DEBUG = 'housekeeping'
   }
 } = process
 

@@ -6,7 +6,7 @@ async function app () {
   const {
     env: {
       DIR = '..',
-      DEBUG = 'housekeeping*'
+      DEBUG = 'housekeeping'
     }
   } = process
 
