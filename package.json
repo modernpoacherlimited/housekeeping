@@ -12,7 +12,7 @@
   "dependencies": {
     "commander": "^8.3.0",
     "debug": "^4.3.3",
-    "dotenv": "^11.0.0",
+    "dotenv": "^12.0.3",
     "glob-all": "^3.2.1",
     "ps-list": "^8.0.0"
   },
