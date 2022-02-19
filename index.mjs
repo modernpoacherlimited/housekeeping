@@ -6,7 +6,9 @@ import debug from 'debug'
 
 import psList from 'ps-list'
 
-import commander from 'commander'
+import {
+  Command
+} from 'commander'
 
 import getPackage from './src/common/get-package.mjs'
 import getPackageName from './src/common/get-package-name.mjs'
@@ -29,44 +31,12 @@ const log = debug('housekeeping')
 
 log('`housekeeping` is awake')
 
-const NAME = 'housek'
-process.title = NAME
+const commander = new Command()
 
 async function app () {
   const PACKAGE = await getPackage('./package.json')
 
   const name = getPackageName(PACKAGE)
-
-  /**
-   *  Permit only one instance of the application
-   */
-  try {
-    const a = (await psList())
-      .filter(({ name }) => name === NAME)
-
-    if (a.length > 1) {
-      const {
-        pid: PID
-      } = process
-
-      const {
-        pid
-      } = a.find(({ pid }) => pid !== PID)
-
-      const log = debug('housekeeping:process:log')
-
-      log(`Killing application "${name}" in process ${pid}.`)
-
-      process.kill(pid)
-    }
-  } catch ({ message }) {
-    const error = debug('housekeeping:process:error')
-
-    error(message)
-    return
-  }
-
-  const log = debug('housekeeping:log')
 
   const {
     pid,
