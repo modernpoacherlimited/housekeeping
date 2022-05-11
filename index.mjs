@@ -4,8 +4,6 @@ import 'dotenv/config'
 
 import debug from 'debug'
 
-import psList from 'ps-list'
-
 import {
   Command
 } from 'commander'
@@ -21,7 +19,7 @@ import E from './src/eslintrc.mjs'
 
 const {
   env: {
-    DEBUG = 'housekeeping'
+    DEBUG = 'housekeeping*'
   }
 } = process
 

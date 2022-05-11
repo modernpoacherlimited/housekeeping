@@ -32,6 +32,7 @@ async function execute (p) {
     info(p)
 
     const {
+      author,
       dependencies,
       devDependencies,
       optionalDependencies,
@@ -41,6 +42,7 @@ async function execute (p) {
     } = await getPackage(p)
 
     await setPackage(p, {
+      ...(author ? { author } : { author: 'Modern Poacher Limited <modernpoacher@modernpoacher.com>' }),
       ...(dependencies ? { dependencies } : {}),
       ...(devDependencies ? { devDependencies } : {}),
       ...(optionalDependencies ? { optionalDependencies } : {}),

@@ -1,9 +1,15 @@
-.DS_Store
-
+# Node
 node_modules
+
+# Mac
+.DS_Store
 
 # User-defined NPM configuration
 .npmrc
+.npmignore
 
 # User-defined NVM configuration
 .nvmrc
+
+# Deps
+.depsrc
