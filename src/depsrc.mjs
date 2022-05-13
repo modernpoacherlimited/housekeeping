@@ -25,7 +25,7 @@ function getFileGlob (p) {
   )
 }
 
-async function execute (p) {
+async function execute (p, AUTHOR) {
   log('execute')
 
   try {
@@ -42,7 +42,7 @@ async function execute (p) {
     } = await getPackage(p)
 
     await setPackage(p, {
-      ...(author ? { author } : { author: 'Modern Poacher Limited <modernpoacher@modernpoacher.com>' }),
+      ...(author ? { author } : { author: AUTHOR }),
       ...(dependencies ? { dependencies } : {}),
       ...(devDependencies ? { devDependencies } : {}),
       ...(optionalDependencies ? { optionalDependencies } : {}),
@@ -55,20 +55,20 @@ async function execute (p) {
   }
 }
 
-async function recurse ([p, ...a]) {
+async function recurse ([p, ...a], author) {
   log('recurse')
 
   const array = await getFileGlob(p)
 
-  await Promise.all(array.map(execute))
+  await Promise.all(array.map((p) => execute(p, author)))
 
-  if (a.length) await recurse(a)
+  if (a.length) await recurse(a, author)
 }
 
-export default async function app (directory) {
+export default async function app (directory, author) {
   log('app')
 
   const array = await getPackages(directory)
 
-  await recurse(array.map(transform))
+  await recurse(array.map(transform), author)
 }

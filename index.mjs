@@ -64,7 +64,7 @@ async function app () {
 
   await P(dir, author, regexp)
 
-  await D(dir)
+  await D(dir, author)
 
   await E(dir)
 }
