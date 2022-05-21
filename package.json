@@ -2,6 +2,7 @@
   "name": "housekeeping",
   "version": "2.0.4",
   "main": "./index.mjs",
+  "type": "module",
   "author": "Jonathan Perry for Modern Poacher Limited <modernpoacher@modernpoacher.com>",
   "license": "ISC",
   "scripts": {
@@ -19,12 +20,9 @@
     "@babel/core": "^7.18.0",
     "@babel/eslint-parser": "^7.17.0",
     "@babel/preset-env": "^7.18.0",
-    "@babel/register": "^7.17.7",
-    "babel-plugin-module-resolver": "^4.1.0",
     "core-js": "^3.22.5",
     "eslint": "^8.16.0",
     "eslint-config-standard": "^17.0.0",
-    "eslint-import-resolver-babel-module": "^5.3.1",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0"
