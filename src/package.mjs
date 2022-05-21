@@ -4,8 +4,8 @@ import {
   resolve
 } from 'path'
 
-import getPackage from './common/get-package.mjs'
-import setPackage from './common/set-package.mjs'
+import getFile from './common/get-file.mjs'
+import setFile from './common/set-file.mjs'
 import getPackages from './common/get-packages.mjs'
 
 const log = debug('housekeeping')
@@ -15,7 +15,7 @@ log('`housekeeping:package` is awake')
 
 const transform = (v) => resolve(v) // constrain to one arg
 
-async function execute (p, AUTHOR, REGEXP, d) {
+async function execute (p, AUTHOR, REGEXP) {
   log('execute')
 
   try {
@@ -47,9 +47,9 @@ async function execute (p, AUTHOR, REGEXP, d) {
       _moduleAliases,
       husky,
       ...rest
-    } = await getPackage(p)
+    } = await getFile(p)
 
-    await setPackage(p, {
+    await setFile(p, {
       ...(name ? { name } : {}),
       ...(version ? { version } : {}),
       ...(description ? { description } : {}),
@@ -81,11 +81,18 @@ async function execute (p, AUTHOR, REGEXP, d) {
   }
 }
 
+async function iterate ([p, ...a], author, regExp) {
+  log('iterate')
+
+  if (p) await execute(p, author, regExp)
+
+  if (a.length) await iterate(a, author, regExp)
+}
+
 export default async function app (directory, author, pattern) {
   log('app')
 
   const array = await getPackages(transform(directory))
-  const regExp = new RegExp(pattern)
 
-  await Promise.all(array.map(transform).map((p) => execute(p, author, regExp)))
+  await iterate(array.map(transform), author, new RegExp(pattern))
 }

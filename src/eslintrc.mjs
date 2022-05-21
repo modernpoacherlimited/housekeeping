@@ -1,17 +1,22 @@
 import debug from 'debug'
 
+import {
+  resolve
+} from 'path'
+
 import glob from 'glob-all'
 
-import transform from './common/transform.mjs'
-
-import getPackage from './common/get-package.mjs'
-import setPackage from './common/set-package.mjs'
+import toDirectory from './common/to-directory.mjs'
+import getFile from './common/get-file.mjs'
+import setFile from './common/set-file.mjs'
 import getPackages from './common/get-packages.mjs'
 
 const log = debug('housekeeping')
 const info = debug('housekeeping:eslintrc')
 
 log('`housekeeping:eslintrc` is awake')
+
+const transform = (v) => resolve(v) // constrain to one arg
 
 function getFileGlob (p) {
   log('getFileGlob')
@@ -49,9 +54,9 @@ async function execute (p) {
       overrides,
       settings,
       ...rest
-    } = await getPackage(p)
+    } = await getFile(p)
 
-    await setPackage(p, {
+    await setFile(p, {
       ...(root ? { root } : {}),
       ...(doesExtend ? { extends: doesExtend } : {}),
       ...(env ? { env } : {}),
@@ -68,12 +73,18 @@ async function execute (p) {
   }
 }
 
+async function iterate ([p, ...a]) {
+  log('iterate')
+
+  if (p) await execute(p)
+
+  if (a.length) await iterate(a)
+}
+
 async function recurse ([p, ...a]) {
   log('recurse')
 
-  const array = await getFileGlob(p)
-
-  await Promise.all(array.map(execute))
+  await iterate(await getFileGlob(p))
 
   if (a.length) await recurse(a)
 }
@@ -81,7 +92,7 @@ async function recurse ([p, ...a]) {
 export default async function app (directory) {
   log('app')
 
-  const array = await getPackages(directory)
+  const array = await getPackages(transform(directory))
 
-  await recurse(array.map(transform))
+  await recurse(array.map(toDirectory))
 }
