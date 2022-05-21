@@ -1,6 +1,6 @@
 {
   "name": "housekeeping",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "main": "./index.mjs",
   "author": "Jonathan Perry for Modern Poacher Limited <modernpoacher@modernpoacher.com>",
   "license": "ISC",
