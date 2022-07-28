@@ -7,7 +7,7 @@
   "license": "ISC",
   "scripts": {
     "start": "DEBUG=housekeeping* node .",
-    "lint": "eslint . --ext .cjs --ext .mjs",
+    "lint": "cross-env NODE_ENV=production eslint . --ext .mjs --ext .cjs --ext .js",
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
