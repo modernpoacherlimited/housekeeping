@@ -13,7 +13,7 @@
   "dependencies": {
     "commander": "^9.4.0",
     "debug": "^4.3.4",
-    "dotenv": "^16.0.2",
+    "dotenv": "^16.0.3",
     "glob-all": "^3.3.0"
   },
   "devDependencies": {
