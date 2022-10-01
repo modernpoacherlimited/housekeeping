@@ -11,7 +11,7 @@
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
-    "commander": "^9.4.0",
+    "commander": "^9.4.1",
     "debug": "^4.3.4",
     "dotenv": "^16.0.3",
     "glob-all": "^3.3.0"
