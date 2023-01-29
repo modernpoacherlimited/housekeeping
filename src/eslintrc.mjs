@@ -1,22 +1,17 @@
 import debug from 'debug'
 
-import {
-  resolve
-} from 'path'
-
 import glob from 'glob-all'
 
 import toDirectory from './common/to-directory.mjs'
 import getFile from './common/get-file.mjs'
 import setFile from './common/set-file.mjs'
 import getPackages from './common/get-packages.mjs'
+import transform from './common/transform.mjs'
 
 const log = debug('housekeeping')
 const info = debug('housekeeping:eslintrc')
 
 log('`housekeeping:eslintrc` is awake')
-
-const transform = (v) => resolve(v) // constrain to one arg
 
 function getFileGlob (p) {
   log('getFileGlob')

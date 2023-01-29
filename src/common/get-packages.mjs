@@ -2,9 +2,9 @@ import debug from 'debug'
 
 import glob from 'glob-all'
 
-const log = debug('housekeeping:get-packages')
+const log = debug('housekeeping:common')
 
-log('`housekeeping:get-packages` is awake')
+log('`housekeeping:common:get-packages` is awake')
 
 export default function getPackages (directory) {
   log('getPackages')

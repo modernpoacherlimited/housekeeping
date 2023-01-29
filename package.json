@@ -6,8 +6,8 @@
   "author": "Jonathan Perry for Modern Poacher Limited <modernpoacher@modernpoacher.com>",
   "license": "ISC",
   "scripts": {
-    "start": "DEBUG=housekeeping* node .",
-    "lint": "cross-env NODE_ENV=production eslint . --ext .mjs --ext .cjs --ext .js",
+    "start": "DEBUG=housekeeping* node app.mjs",
+    "lint": "eslint . --ext .cjs --ext .mjs",
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {

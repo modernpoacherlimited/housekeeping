@@ -1,19 +1,14 @@
 import debug from 'debug'
 
-import {
-  resolve
-} from 'path'
-
 import getFile from './common/get-file.mjs'
 import setFile from './common/set-file.mjs'
 import getPackages from './common/get-packages.mjs'
+import transform from './common/transform.mjs'
 
 const log = debug('housekeeping')
 const info = debug('housekeeping:package')
 
 log('`housekeeping:package` is awake')
-
-const transform = (v) => resolve(v) // constrain to one arg
 
 async function execute (p, AUTHOR, REGEXP) {
   log('execute')
