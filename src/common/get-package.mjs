@@ -6,7 +6,7 @@ const log = debug('housekeeping:common')
 
 log('`housekeeping:common:get-package` is awake')
 
-export default async function getPackage (directory) {
+export default async function getPackage (directory = '.') {
   log('getPackage')
 
   const fileData = await readFile(`${directory}/package.json`, 'utf8')
