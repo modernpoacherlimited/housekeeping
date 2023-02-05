@@ -16,17 +16,7 @@ log('`housekeeping:depsrc` is awake')
 function toPatterns (directory) {
   return [
     `${directory}/.depsrc`,
-    `${directory}/.depsrc.json`,
-    `${directory}/**/*/.depsrc`,
-    `${directory}/**/*/.depsrc.json`,
-    `!${directory}/node_modules/.depsrc`,
-    `!${directory}/node_modules/.depsrc.json`,
-    `!${directory}/node_modules/**/*/.depsrc`,
-    `!${directory}/node_modules/**/*/.depsrc.json`,
-    `!${directory}/**/*/node_modules/.depsrc`,
-    `!${directory}/**/*/node_modules/.depsrc.json`,
-    `!${directory}/**/*/node_modules/**/*/.depsrc`,
-    `!${directory}/**/*/node_modules/**/*/.depsrc.json`
+    `${directory}/.depsrc.json`
   ]
 }
 
@@ -63,13 +53,27 @@ async function renderFile (p, AUTHOR) {
 async function handlePackageDirectory (directory, author) {
   log('handlePackageDirectory')
 
-  const a = await getFilePathList(toPatterns(transform(directory)))
-  for (const p of genFilePath(a)) await renderFile(p, author)
+  const d = transform(directory)
+  try {
+    info(d)
+
+    const a = await getFilePathList(toPatterns(d))
+    for (const p of genFilePath(a)) await renderFile(p, author)
+  } catch ({ message }) {
+    log(message)
+  }
 }
 
 export default async function handleDirectory (directory, author) {
   log('handleDirectory')
 
-  const a = await getPackages(transform(directory))
-  for (const p of genFilePath(a)) await handlePackageDirectory(toDirectory(p), author)
+  const d = transform(directory)
+  try {
+    info(d)
+
+    const a = await getPackages(d)
+    for (const p of genFilePath(a)) await handlePackageDirectory(toDirectory(p), author)
+  } catch ({ message }) {
+    log(message)
+  }
 }

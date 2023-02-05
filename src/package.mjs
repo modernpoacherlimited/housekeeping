@@ -80,6 +80,14 @@ async function renderFile (p, AUTHOR, REGEXP) {
 export default async function handleDirectory (directory, author, pattern) {
   log('handleDirectory')
 
-  const a = await getPackages(transform(directory))
-  for (const p of genFilePath(a)) await renderFile(p, author, new RegExp(pattern))
+  const d = transform(directory)
+
+  try {
+    info(d)
+
+    const a = await getPackages(d)
+    for (const p of genFilePath(a)) await renderFile(p, author, new RegExp(pattern))
+  } catch ({ message }) {
+    log(message)
+  }
 }

@@ -69,13 +69,27 @@ async function renderFile (p) {
 async function handlePackageDirectory (directory) {
   log('handlePackageDirectory')
 
-  const a = await getFilePathList(toPatterns(transform(directory)))
-  for (const p of genFilePath(a)) await renderFile(p)
+  const d = transform(directory)
+  try {
+    info(d)
+
+    const a = await getFilePathList(toPatterns(transform(directory)))
+    for (const p of genFilePath(a)) await renderFile(p)
+  } catch ({ message }) {
+    log(message)
+  }
 }
 
 export default async function handleDirectory (directory) {
   log('handleDirectory')
 
-  const a = await getPackages(transform(directory))
-  for (const p of genFilePath(a)) await handlePackageDirectory(toDirectory(p))
+  const d = transform(directory)
+  try {
+    info(d)
+
+    const a = await getPackages(d)
+    for (const p of genFilePath(a)) await handlePackageDirectory(toDirectory(p))
+  } catch ({ message }) {
+    log(message)
+  }
 }
