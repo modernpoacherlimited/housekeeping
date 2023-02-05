@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import debug from 'debug'
 
 import getPackage from './src/common/get-package.mjs'

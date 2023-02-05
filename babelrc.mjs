@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import debug from 'debug'
 
 import B from './src/babelrc.mjs'
