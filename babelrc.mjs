@@ -1,6 +1,6 @@
 import debug from 'debug'
 
-import D from './src/depsrc.mjs'
+import B from './src/babelrc.mjs'
 
 async function app () {
   const {
@@ -12,7 +12,7 @@ async function app () {
 
   debug.enable(DEBUG)
 
-  return await D(DIR)
+  return await B(DIR)
 }
 
 export default app()

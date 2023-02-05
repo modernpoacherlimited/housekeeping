@@ -16,6 +16,7 @@ import getPackageVersion from './src/common/get-package-version.mjs'
 import P from './src/package.mjs'
 import D from './src/depsrc.mjs'
 import E from './src/eslintrc.mjs'
+import B from './src/babelrc.mjs'
 
 const log = debug('housekeeping')
 
@@ -58,6 +59,8 @@ async function app () {
   await D(dir, author)
 
   await E(dir)
+
+  await B(dir)
 }
 
 export default app()

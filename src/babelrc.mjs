@@ -9,24 +9,24 @@ import getPackages from './common/get-packages.mjs'
 import transform from './common/transform.mjs'
 
 const log = debug('housekeeping')
-const info = debug('housekeeping:eslintrc')
+const info = debug('housekeeping:babelrc')
 
-log('`housekeeping:eslintrc` is awake')
+log('`housekeeping:babelrc` is awake')
 
 function toPatterns (directory) {
   return [
-    `${directory}/.eslintrc`,
-    `${directory}/.eslintrc.json`,
-    `${directory}/**/*/.eslintrc`,
-    `${directory}/**/*/.eslintrc.json`,
-    `!${directory}/node_modules/.eslintrc`,
-    `!${directory}/node_modules/.eslintrc.json`,
-    `!${directory}/node_modules/**/*/.eslintrc`,
-    `!${directory}/node_modules/**/*/.eslintrc.json`,
-    `!${directory}/**/*/node_modules/.eslintrc`,
-    `!${directory}/**/*/node_modules/.eslintrc.json`,
-    `!${directory}/**/*/node_modules/**/*/.eslintrc`,
-    `!${directory}/**/*/node_modules/**/*/.eslintrc.json`
+    `${directory}/.babelrc`,
+    `${directory}/.babelrc.json`,
+    `${directory}/**/*/.babelrc`,
+    `${directory}/**/*/.babelrc.json`,
+    `!${directory}/node_modules/.babelrc`,
+    `!${directory}/node_modules/.babelrc.json`,
+    `!${directory}/node_modules/**/*/.babelrc`,
+    `!${directory}/node_modules/**/*/.babelrc.json`,
+    `!${directory}/**/*/node_modules/.babelrc`,
+    `!${directory}/**/*/node_modules/.babelrc.json`,
+    `!${directory}/**/*/node_modules/**/*/.babelrc`,
+    `!${directory}/**/*/node_modules/**/*/.babelrc.json`
   ]
 }
 
@@ -37,28 +37,14 @@ async function renderFile (p) {
     info(p)
 
     const {
-      root,
-      extends: doesExtend,
-      env,
-      parser,
-      parserOptions,
+      presets,
       plugins,
-      rules,
-      overrides,
-      settings,
       ...rest
     } = await getFile(p)
 
     await setFile(p, {
-      ...(root ? { root } : {}),
-      ...(doesExtend ? { extends: doesExtend } : {}),
-      ...(env ? { env } : {}),
-      ...(parser ? { parser } : {}),
-      ...(parserOptions ? { parserOptions } : {}),
+      ...(presets ? { presets } : {}),
       ...(plugins ? { plugins } : {}),
-      ...(rules ? { rules } : {}),
-      ...(overrides ? { overrides } : {}),
-      ...(settings ? { settings } : {}),
       ...rest
     })
   } catch ({ message = 'No error message defined' }) {

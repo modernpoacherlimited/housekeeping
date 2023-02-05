@@ -13,7 +13,7 @@ async function app () {
       DIR = '..',
       AUTHOR = getPackageAuthor(PACKAGE),
       REGEXP = '^Jonathan Perry',
-      DEBUG = 'housekeeping'
+      DEBUG = 'housekeeping*'
     }
   } = process
 

@@ -1,7 +1,7 @@
 import debug from 'debug'
 
-import glob from 'glob-all'
-
+import getFilePathList from './common/get-file-path-list.mjs'
+import genFilePath from './common/gen-file-path.mjs'
 import toDirectory from './common/to-directory.mjs'
 import getFile from './common/get-file.mjs'
 import setFile from './common/set-file.mjs'
@@ -13,20 +13,25 @@ const info = debug('housekeeping:depsrc')
 
 log('`housekeeping:depsrc` is awake')
 
-function getFileGlob (p) {
-  log('getFileGlob')
-
-  return (
-    new Promise((resolve, reject) => {
-      const pattern = [`${p}/.depsrc`, `${p}/.depsrc.json`]
-
-      glob(pattern, (e, a) => (!e) ? resolve(a) : reject(e))
-    })
-  )
+function toPatterns (directory) {
+  return [
+    `${directory}/.depsrc`,
+    `${directory}/.depsrc.json`,
+    `${directory}/**/*/.depsrc`,
+    `${directory}/**/*/.depsrc.json`,
+    `!${directory}/node_modules/.depsrc`,
+    `!${directory}/node_modules/.depsrc.json`,
+    `!${directory}/node_modules/**/*/.depsrc`,
+    `!${directory}/node_modules/**/*/.depsrc.json`,
+    `!${directory}/**/*/node_modules/.depsrc`,
+    `!${directory}/**/*/node_modules/.depsrc.json`,
+    `!${directory}/**/*/node_modules/**/*/.depsrc`,
+    `!${directory}/**/*/node_modules/**/*/.depsrc.json`
+  ]
 }
 
-async function execute (p, AUTHOR) {
-  log('execute')
+async function renderFile (p, AUTHOR) {
+  log('renderFile')
 
   try {
     info(p)
@@ -55,26 +60,16 @@ async function execute (p, AUTHOR) {
   }
 }
 
-async function iterate ([p, ...a], author) {
-  log('iterate')
+async function handlePackageDirectory (directory, author) {
+  log('handlePackageDirectory')
 
-  if (p) await execute(p, author)
-
-  if (a.length) await iterate(a, author)
+  const a = await getFilePathList(toPatterns(transform(directory)))
+  for (const p of genFilePath(a)) await renderFile(p, author)
 }
 
-async function recurse ([p, ...a], author) {
-  log('recurse')
+export default async function handleDirectory (directory, author) {
+  log('handleDirectory')
 
-  await iterate(await getFileGlob(p), author)
-
-  if (a.length) await recurse(a, author)
-}
-
-export default async function app (directory, author) {
-  log('app')
-
-  const array = await getPackages(transform(directory))
-
-  await recurse(array.map(toDirectory), author)
+  const a = await getPackages(transform(directory))
+  for (const p of genFilePath(a)) await handlePackageDirectory(toDirectory(p), author)
 }

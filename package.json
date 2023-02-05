@@ -7,6 +7,10 @@
   "license": "ISC",
   "scripts": {
     "start": "DEBUG=housekeeping* node app.mjs",
+    "start:package": "node package.mjs",
+    "start:depsrc": "node depsrc.mjs",
+    "start:eslintrc": "node eslintrc.mjs",
+    "start:babelrc": "node babelrc.mjs",
     "lint": "eslint . --ext .cjs --ext .mjs",
     "lint:fix": "npm run lint -- --fix"
   },
