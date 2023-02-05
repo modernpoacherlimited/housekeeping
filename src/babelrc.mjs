@@ -37,12 +37,16 @@ async function renderFile (p) {
     info(p)
 
     const {
+      compact,
+      comments,
       presets,
       plugins,
       ...rest
     } = await getFile(p)
 
     await setFile(p, {
+      ...(typeof compact === 'boolean' ? { compact } : {}),
+      ...(typeof comments === 'boolean' ? { comments } : {}),
       ...(presets ? { presets } : {}),
       ...(plugins ? { plugins } : {}),
       ...rest
