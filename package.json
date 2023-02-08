@@ -1,6 +1,6 @@
 {
   "name": "housekeeping",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "main": "./index.mjs",
   "type": "module",
   "author": "Jonathan Perry for Modern Poacher Limited <modernpoacher@modernpoacher.com>",
