@@ -8,6 +8,8 @@ import setFile from './common/set-file.mjs'
 import getPackages from './common/get-packages.mjs'
 import transform from './common/transform.mjs'
 
+const MESSAGE = 'No error message defined'
+
 const log = debug('housekeeping')
 const info = debug('housekeeping:depsrc')
 
@@ -45,7 +47,9 @@ async function renderFile (p, AUTHOR) {
       ...(peerDependencies ? { peerDependencies } : {}),
       ...rest
     })
-  } catch ({ message = 'No error message defined' }) {
+  } catch ({
+    message = MESSAGE
+  }) {
     log(message)
   }
 }
@@ -59,7 +63,9 @@ async function handlePackageDirectory (directory, author) {
 
     const a = await getFilePathList(toPatterns(d))
     for (const p of genFilePath(a)) await renderFile(p, author)
-  } catch ({ message }) {
+  } catch ({
+    message = MESSAGE
+  }) {
     log(message)
   }
 }
@@ -73,7 +79,9 @@ export default async function handleDirectory (directory, author) {
 
     const a = await getPackages(d)
     for (const p of genFilePath(a)) await handlePackageDirectory(toDirectory(p), author)
-  } catch ({ message }) {
+  } catch ({
+    message = MESSAGE
+  }) {
     log(message)
   }
 }

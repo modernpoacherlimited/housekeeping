@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-import 'dotenv/config'
-
 import debug from 'debug'
 
 import {
@@ -12,6 +10,7 @@ import getPackage from './src/common/get-package.mjs'
 import getPackageName from './src/common/get-package-name.mjs'
 import getPackageAuthor from './src/common/get-package-author.mjs'
 import getPackageVersion from './src/common/get-package-version.mjs'
+import normalise from './src/common/normalise.mjs'
 
 import P from './src/package.mjs'
 import D from './src/depsrc.mjs'
@@ -46,6 +45,7 @@ async function app () {
     .version(VERSION)
     .option('-d, --dir [dir]', 'Directory path')
     .option('-a, --author [author]', 'Package author')
+    .option('-r, --regexp [regexp]', 'Package author Regular Expression')
     .parse(argv)
 
   const {
@@ -54,13 +54,15 @@ async function app () {
     regexp = REGEXP
   } = commander.opts()
 
-  await P(dir, author, regexp)
+  const directory = normalise(dir)
 
-  await D(dir, author)
+  await P(directory, author, regexp)
 
-  await E(dir)
+  await D(directory, author)
 
-  await B(dir)
+  await E(directory)
+
+  await B(directory)
 }
 
 export default app()

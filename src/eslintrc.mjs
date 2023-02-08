@@ -8,6 +8,8 @@ import setFile from './common/set-file.mjs'
 import getPackages from './common/get-packages.mjs'
 import transform from './common/transform.mjs'
 
+const MESSAGE = 'No error message defined'
+
 const log = debug('housekeeping')
 const info = debug('housekeeping:eslintrc')
 
@@ -61,7 +63,9 @@ async function renderFile (p) {
       ...(settings ? { settings } : {}),
       ...rest
     })
-  } catch ({ message = 'No error message defined' }) {
+  } catch ({
+    message = MESSAGE
+  }) {
     log(message)
   }
 }
@@ -75,7 +79,9 @@ async function handlePackageDirectory (directory) {
 
     const a = await getFilePathList(toPatterns(transform(directory)))
     for (const p of genFilePath(a)) await renderFile(p)
-  } catch ({ message }) {
+  } catch ({
+    message = MESSAGE
+  }) {
     log(message)
   }
 }
@@ -89,7 +95,9 @@ export default async function handleDirectory (directory) {
 
     const a = await getPackages(d)
     for (const p of genFilePath(a)) await handlePackageDirectory(toDirectory(p))
-  } catch ({ message }) {
+  } catch ({
+    message = MESSAGE
+  }) {
     log(message)
   }
 }

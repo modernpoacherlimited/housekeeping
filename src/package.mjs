@@ -6,6 +6,8 @@ import setFile from './common/set-file.mjs'
 import getPackages from './common/get-packages.mjs'
 import transform from './common/transform.mjs'
 
+const MESSAGE = 'No error message defined'
+
 const log = debug('housekeeping')
 const info = debug('housekeeping:package')
 
@@ -72,22 +74,25 @@ async function renderFile (p, AUTHOR, REGEXP) {
       ...(_moduleAliases ? { _moduleAliases } : {}),
       ...(husky ? { husky } : {})
     })
-  } catch ({ message = 'No error message defined' }) {
+  } catch ({
+    message = MESSAGE
+  }) {
     log(message)
   }
 }
 
-export default async function handleDirectory (directory, author, pattern) {
+export default async function handleDirectory (directory, author, regExp) {
   log('handleDirectory')
 
   const d = transform(directory)
-
   try {
     info(d)
 
     const a = await getPackages(d)
-    for (const p of genFilePath(a)) await renderFile(p, author, new RegExp(pattern))
-  } catch ({ message }) {
+    for (const p of genFilePath(a)) await renderFile(p, author, regExp)
+  } catch ({
+    message = MESSAGE
+  }) {
     log(message)
   }
 }
