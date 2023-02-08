@@ -89,7 +89,7 @@ export default async function handleDirectory (directory, author, regExp) {
     info(d)
 
     const a = await getPackages(d)
-    for (const p of genFilePath(a)) await renderFile(p, author, regExp)
+    for (const p of genFilePath(a)) await renderFile(p, author, new RegExp(regExp))
   } catch ({
     message = MESSAGE
   }) {

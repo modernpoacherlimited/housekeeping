@@ -56,6 +56,12 @@ async function app () {
 
   const directory = normalise(dir)
 
+  log({
+    directory,
+    author,
+    regexp
+  })
+
   await P(directory, author, regexp)
 
   await D(directory, author)
