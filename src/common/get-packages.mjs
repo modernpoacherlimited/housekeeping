@@ -10,6 +10,6 @@ export default function getPackages (directory = '.') {
   log('getPackages')
 
   return (
-    getFilePathList(`${directory}/*/package.json`)
+    getFilePathList([`${directory}/package.json`, `${directory}/*/package.json`])
   )
 }
