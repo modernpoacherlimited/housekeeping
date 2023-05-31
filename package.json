@@ -1,6 +1,7 @@
 {
   "name": "housekeeping",
   "version": "3.2.0",
+  "private": true,
   "main": "./index.mjs",
   "type": "module",
   "author": "Jonathan Perry for Modern Poacher Limited <modernpoacher@modernpoacher.com>",
@@ -15,7 +16,8 @@
     "start:tsconfig": "DEBUG=housekeeping* node tsconfig.mjs",
     "start:babelrc": "DEBUG=housekeeping* node babelrc.mjs",
     "lint": "eslint . --ext .cjs --ext .mjs",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "prepare": "husky install"
   },
   "dependencies": {
     "commander": "^10.0.1",
@@ -26,11 +28,13 @@
     "@babel/core": "^7.22.1",
     "@babel/eslint-parser": "^7.21.8",
     "@babel/preset-env": "^7.22.4",
+    "@modernpoacher/hooks": "^1.0.414",
     "core-js": "^3.30.2",
     "eslint": "^8.41.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.1.1"
+    "eslint-plugin-promise": "^6.1.1",
+    "husky": "^8.0.3"
   }
 }
