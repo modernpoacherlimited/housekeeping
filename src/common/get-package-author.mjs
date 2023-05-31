@@ -1,8 +1,8 @@
 import debug from 'debug'
 
-const log = debug('housekeeping:common')
+const log = debug('housekeeping/common/get-package-author')
 
-log('`housekeeping:common:get-package-author` is awake')
+log('`housekeeping` is awake')
 
 export default function getPackageAuthor (PACKAGE = {}) {
   log('getPackageAuthor')

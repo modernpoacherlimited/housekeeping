@@ -1,8 +1,8 @@
 import debug from 'debug'
 
-const log = debug('housekeeping:common')
+const log = debug('housekeeping/common/get-package-name')
 
-log('`housekeeping:common:get-package-name` is awake')
+log('`housekeeping` is awake')
 
 export default function getPackageName (PACKAGE = {}) {
   log('getPackageName')

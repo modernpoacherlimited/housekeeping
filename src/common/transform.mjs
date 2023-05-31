@@ -1,5 +1,5 @@
 import {
   resolve
-} from 'path'
+} from 'node:path'
 
 export default (v) => resolve(v) // constrain to one arg

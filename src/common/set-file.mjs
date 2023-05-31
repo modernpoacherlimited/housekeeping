@@ -2,9 +2,9 @@ import debug from 'debug'
 
 import { writeFile } from 'fs/promises'
 
-const log = debug('housekeeping:common')
+const log = debug('housekeeping/common/set-file')
 
-log('`housekeeping:common:set-file` is awake')
+log('`housekeeping` is awake')
 
 export default async function setFile (filePath, o) {
   log('setFile')

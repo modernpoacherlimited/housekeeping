@@ -2,9 +2,9 @@ import debug from 'debug'
 
 import getFilePathList from './get-file-path-list.mjs'
 
-const log = debug('housekeeping:common')
+const log = debug('housekeeping/common/get-packages')
 
-log('`housekeeping:common:get-packages` is awake')
+log('`housekeeping` is awake')
 
 export default function getPackages (directory = '.') {
   log('getPackages')

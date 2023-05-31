@@ -1,8 +1,8 @@
 import debug from 'debug'
 
-const log = debug('housekeeping:common')
+const log = debug('housekeeping/common/gen-file-path')
 
-log('`housekeeping:common:gen-file-path` is awake')
+log('`housekeeping` is awake')
 
 export default function * genFilePath (filePathList) {
   log('genFilePath')

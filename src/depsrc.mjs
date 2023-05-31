@@ -11,9 +11,9 @@ import transform from './common/transform.mjs'
 const MESSAGE = 'No error message defined'
 
 const log = debug('housekeeping')
-const info = debug('housekeeping:depsrc')
+const info = debug('housekeeping/depsrc')
 
-log('`housekeeping:depsrc` is awake')
+log('`housekeeping` is awake')
 
 function toPatterns (directory) {
   return [

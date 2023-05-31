@@ -11,22 +11,28 @@ import transform from './common/transform.mjs'
 const MESSAGE = 'No error message defined'
 
 const log = debug('housekeeping')
-const info = debug('housekeeping:eslintrc')
+const info = debug('housekeeping/eslintrc')
 
-log('`housekeeping:eslintrc` is awake')
+log('`housekeeping` is awake')
 
 function toPatterns (directory) {
   return [
     `${directory}/.eslintrc`,
     `${directory}/.eslintrc.json`,
+    `${directory}/*/.eslintrc`,
+    `${directory}/*/.eslintrc.json`,
     `${directory}/**/*/.eslintrc`,
     `${directory}/**/*/.eslintrc.json`,
     `!${directory}/node_modules/.eslintrc`,
     `!${directory}/node_modules/.eslintrc.json`,
+    `!${directory}/node_modules/*/.eslintrc`,
+    `!${directory}/node_modules/*/.eslintrc.json`,
     `!${directory}/node_modules/**/*/.eslintrc`,
     `!${directory}/node_modules/**/*/.eslintrc.json`,
     `!${directory}/**/*/node_modules/.eslintrc`,
     `!${directory}/**/*/node_modules/.eslintrc.json`,
+    `!${directory}/**/*/node_modules/*/.eslintrc`,
+    `!${directory}/**/*/node_modules/*/.eslintrc.json`,
     `!${directory}/**/*/node_modules/**/*/.eslintrc`,
     `!${directory}/**/*/node_modules/**/*/.eslintrc.json`
   ]

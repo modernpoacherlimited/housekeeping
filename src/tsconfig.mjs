@@ -11,30 +11,21 @@ import transform from './common/transform.mjs'
 const MESSAGE = 'No error message defined'
 
 const log = debug('housekeeping')
-const info = debug('housekeeping/babelrc')
+const info = debug('housekeeping/tsconfig')
 
 log('`housekeeping` is awake')
 
 function toPatterns (directory) {
   return [
-    `${directory}/.babelrc`,
-    `${directory}/.babelrc.json`,
-    `${directory}/*/.babelrc`,
-    `${directory}/*/.babelrc.json`,
-    `${directory}/**/*/.babelrc`,
-    `${directory}/**/*/.babelrc.json`,
-    `!${directory}/node_modules/.babelrc`,
-    `!${directory}/node_modules/.babelrc.json`,
-    `!${directory}/node_modules/*/.babelrc`,
-    `!${directory}/node_modules/*/.babelrc.json`,
-    `!${directory}/node_modules/**/*/.babelrc`,
-    `!${directory}/node_modules/**/*/.babelrc.json`,
-    `!${directory}/**/*/node_modules/.babelrc`,
-    `!${directory}/**/*/node_modules/.babelrc.json`,
-    `!${directory}/**/*/node_modules/*/.babelrc`,
-    `!${directory}/**/*/node_modules/*/.babelrc.json`,
-    `!${directory}/**/*/node_modules/**/*/.babelrc`,
-    `!${directory}/**/*/node_modules/**/*/.babelrc.json`
+    `${directory}/tsconfig.json`,
+    `${directory}/*/tsconfig.json`,
+    `${directory}/**/*/tsconfig.json`,
+    `!${directory}/node_modules/tsconfig.json`,
+    `!${directory}/node_modules/*/tsconfig.json`,
+    `!${directory}/node_modules/**/*/tsconfig.json`,
+    `!${directory}/**/*/node_modules/tsconfig.json`,
+    `!${directory}/**/*/node_modules/*/tsconfig.json`,
+    `!${directory}/**/*/node_modules/**/*/tsconfig.json`
   ]
 }
 
@@ -45,22 +36,16 @@ async function renderFile (p) {
     info(p)
 
     const {
-      root,
-      rootMode,
-      compact,
-      comments,
-      presets,
-      plugins,
+      compilerOptions,
+      include,
+      exclude,
       ...rest
     } = await getFile(p)
 
     await setFile(p, {
-      ...(root ? { root } : {}),
-      ...(rootMode ? { rootMode } : {}),
-      ...(typeof compact === 'boolean' ? { compact } : {}),
-      ...(typeof comments === 'boolean' ? { comments } : {}),
-      ...(presets ? { presets } : {}),
-      ...(plugins ? { plugins } : {}),
+      ...(compilerOptions ? { compilerOptions } : {}),
+      ...(include ? { include } : {}),
+      ...(exclude ? { exclude } : {}),
       ...rest
     })
   } catch ({

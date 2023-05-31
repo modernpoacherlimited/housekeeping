@@ -14,6 +14,9 @@ import normalise from './src/common/normalise.mjs'
 
 import P from './src/package.mjs'
 import D from './src/depsrc.mjs'
+import M from './src/mocharc.mjs'
+import J from './src/jsconfig.mjs'
+import T from './src/tsconfig.mjs'
 import E from './src/eslintrc.mjs'
 import B from './src/babelrc.mjs'
 
@@ -65,6 +68,12 @@ async function app () {
   await P(directory, author, regexp)
 
   await D(directory, author)
+
+  await M(directory)
+
+  await J(directory)
+
+  await T(directory)
 
   await E(directory)
 

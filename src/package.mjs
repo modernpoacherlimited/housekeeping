@@ -9,9 +9,9 @@ import transform from './common/transform.mjs'
 const MESSAGE = 'No error message defined'
 
 const log = debug('housekeeping')
-const info = debug('housekeeping:package')
+const info = debug('housekeeping/package')
 
-log('`housekeeping:package` is awake')
+log('`housekeeping` is awake')
 
 async function renderFile (p, AUTHOR, REGEXP) {
   log('renderFile')

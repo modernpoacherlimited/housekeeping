@@ -11,30 +11,30 @@ import transform from './common/transform.mjs'
 const MESSAGE = 'No error message defined'
 
 const log = debug('housekeeping')
-const info = debug('housekeeping/babelrc')
+const info = debug('housekeeping/mocharc')
 
 log('`housekeeping` is awake')
 
 function toPatterns (directory) {
   return [
-    `${directory}/.babelrc`,
-    `${directory}/.babelrc.json`,
-    `${directory}/*/.babelrc`,
-    `${directory}/*/.babelrc.json`,
-    `${directory}/**/*/.babelrc`,
-    `${directory}/**/*/.babelrc.json`,
-    `!${directory}/node_modules/.babelrc`,
-    `!${directory}/node_modules/.babelrc.json`,
-    `!${directory}/node_modules/*/.babelrc`,
-    `!${directory}/node_modules/*/.babelrc.json`,
-    `!${directory}/node_modules/**/*/.babelrc`,
-    `!${directory}/node_modules/**/*/.babelrc.json`,
-    `!${directory}/**/*/node_modules/.babelrc`,
-    `!${directory}/**/*/node_modules/.babelrc.json`,
-    `!${directory}/**/*/node_modules/*/.babelrc`,
-    `!${directory}/**/*/node_modules/*/.babelrc.json`,
-    `!${directory}/**/*/node_modules/**/*/.babelrc`,
-    `!${directory}/**/*/node_modules/**/*/.babelrc.json`
+    `${directory}/.mocharc`,
+    `${directory}/.mocharc.json`,
+    `${directory}/*/.mocharc`,
+    `${directory}/*/.mocharc.json`,
+    `${directory}/**/*/.mocharc`,
+    `${directory}/**/*/.mocharc.json`,
+    `!${directory}/node_modules/.mocharc`,
+    `!${directory}/node_modules/.mocharc.json`,
+    `!${directory}/node_modules/*/.mocharc`,
+    `!${directory}/node_modules/*/.mocharc.json`,
+    `!${directory}/node_modules/**/*/.mocharc`,
+    `!${directory}/node_modules/**/*/.mocharc.json`,
+    `!${directory}/**/*/node_modules/.mocharc`,
+    `!${directory}/**/*/node_modules/.mocharc.json`,
+    `!${directory}/**/*/node_modules/*/.mocharc`,
+    `!${directory}/**/*/node_modules/*/.mocharc.json`,
+    `!${directory}/**/*/node_modules/**/*/.mocharc`,
+    `!${directory}/**/*/node_modules/**/*/.mocharc.json`
   ]
 }
 
@@ -45,22 +45,14 @@ async function renderFile (p) {
     info(p)
 
     const {
-      root,
-      rootMode,
-      compact,
-      comments,
-      presets,
-      plugins,
+      'node-option': nodeOption,
+      extension,
       ...rest
     } = await getFile(p)
 
     await setFile(p, {
-      ...(root ? { root } : {}),
-      ...(rootMode ? { rootMode } : {}),
-      ...(typeof compact === 'boolean' ? { compact } : {}),
-      ...(typeof comments === 'boolean' ? { comments } : {}),
-      ...(presets ? { presets } : {}),
-      ...(plugins ? { plugins } : {}),
+      ...(nodeOption ? { 'node-option': nodeOption } : {}),
+      ...(extension ? { extension } : {}),
       ...rest
     })
   } catch ({

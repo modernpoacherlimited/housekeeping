@@ -1,6 +1,6 @@
 import {
   dirname,
   resolve
-} from 'path'
+} from 'node:path'
 
 export default (p) => resolve(dirname(p))

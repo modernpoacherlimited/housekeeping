@@ -2,9 +2,9 @@ import debug from 'debug'
 
 import { readFile } from 'fs/promises'
 
-const log = debug('housekeeping:common')
+const log = debug('housekeeping/common/get-file')
 
-log('`housekeeping:common:get-file` is awake')
+log('`housekeeping` is awake')
 
 export default async function getFile (filePath) {
   log('getFile')

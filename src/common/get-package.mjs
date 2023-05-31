@@ -2,9 +2,9 @@ import debug from 'debug'
 
 import getFile from './get-file.mjs'
 
-const log = debug('housekeeping:common')
+const log = debug('housekeeping/common/get-package')
 
-log('`housekeeping:common:get-package` is awake')
+log('`housekeeping` is awake')
 
 export default async function getPackage (directory = '.') {
   log('getPackage')
