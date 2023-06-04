@@ -8,8 +8,9 @@ import transform from './common/transform.mjs'
 
 const MESSAGE = 'No error message defined'
 
-const log = debug('housekeeping')
-const info = debug('housekeeping/package')
+const log = debug('housekeeping/package')
+const info = debug('housekeeping/package:info')
+const error = debug('housekeeping/package:error')
 
 log('`housekeeping` is awake')
 
@@ -77,7 +78,7 @@ async function renderFile (p, AUTHOR, REGEXP) {
   } catch ({
     message = MESSAGE
   }) {
-    log(message)
+    error(message)
   }
 }
 
@@ -93,6 +94,6 @@ export default async function handleDirectory (directory, author, regExp) {
   } catch ({
     message = MESSAGE
   }) {
-    log(message)
+    error(message)
   }
 }

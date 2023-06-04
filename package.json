@@ -15,7 +15,7 @@
     "start:jsconfig": "DEBUG=housekeeping* node jsconfig.mjs",
     "start:tsconfig": "DEBUG=housekeeping* node tsconfig.mjs",
     "start:babelrc": "DEBUG=housekeeping* node babelrc.mjs",
-    "lint": "eslint . --ext .cjs --ext .mjs",
+    "lint": "eslint . --ext .mjs --ext .cjs",
     "lint:fix": "npm run lint -- --fix",
     "prepare": "husky install"
   },

@@ -10,8 +10,9 @@ import transform from './common/transform.mjs'
 
 const MESSAGE = 'No error message defined'
 
-const log = debug('housekeeping')
-const info = debug('housekeeping/tsconfig')
+const log = debug('housekeeping/tsconfig')
+const info = debug('housekeeping/tsconfig:info')
+const error = debug('housekeeping/tsconfig:info')
 
 log('`housekeeping` is awake')
 
@@ -51,7 +52,7 @@ async function renderFile (p) {
   } catch ({
     message = MESSAGE
   }) {
-    log(message)
+    error(message)
   }
 }
 
@@ -67,7 +68,7 @@ async function handlePackageDirectory (directory) {
   } catch ({
     message = MESSAGE
   }) {
-    log(message)
+    error(message)
   }
 }
 
@@ -83,6 +84,6 @@ export default async function handleDirectory (directory) {
   } catch ({
     message = MESSAGE
   }) {
-    log(message)
+    error(message)
   }
 }

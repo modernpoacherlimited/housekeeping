@@ -10,8 +10,9 @@ import transform from './common/transform.mjs'
 
 const MESSAGE = 'No error message defined'
 
-const log = debug('housekeeping')
-const info = debug('housekeeping/depsrc')
+const log = debug('housekeeping/depsrc')
+const info = debug('housekeeping/depsrc:info')
+const error = debug('housekeeping/depsrc:error')
 
 log('`housekeeping` is awake')
 
@@ -50,7 +51,7 @@ async function renderFile (p, AUTHOR) {
   } catch ({
     message = MESSAGE
   }) {
-    log(message)
+    error(message)
   }
 }
 
@@ -66,7 +67,7 @@ async function handlePackageDirectory (directory, author) {
   } catch ({
     message = MESSAGE
   }) {
-    log(message)
+    error(message)
   }
 }
 
@@ -82,6 +83,6 @@ export default async function handleDirectory (directory, author) {
   } catch ({
     message = MESSAGE
   }) {
-    log(message)
+    error(message)
   }
 }
