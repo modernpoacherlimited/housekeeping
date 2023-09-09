@@ -1,6 +1,6 @@
 {
   "name": "housekeeping",
-  "version": "3.2.38",
+  "version": "3.2.39",
   "private": true,
   "main": "./index.mjs",
   "type": "module",
@@ -32,7 +32,7 @@
     "@babel/core": "^7.22.17",
     "@babel/eslint-parser": "^7.22.15",
     "@babel/preset-env": "^7.22.15",
-    "@modernpoacher/hooks": "^1.0.433",
+    "@modernpoacher/hooks": "^1.0.434",
     "core-js": "^3.32.2",
     "eslint": "^8.49.0",
     "eslint-config-standard": "^17.1.0",
