@@ -18,6 +18,7 @@ import M from './src/mocharc.mjs'
 import J from './src/jsconfig.mjs'
 import T from './src/tsconfig.mjs'
 import E from './src/eslintrc.mjs'
+import S from './src/stylelintrc.mjs'
 import B from './src/babelrc.mjs'
 
 const log = debug('housekeeping')
@@ -76,6 +77,8 @@ async function app () {
   await T(directory)
 
   await E(directory)
+
+  await S(directory)
 
   await B(directory)
 }

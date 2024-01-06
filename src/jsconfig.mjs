@@ -37,6 +37,7 @@ async function renderFile (p) {
     info(p)
 
     const {
+      extends: doesExtend,
       compilerOptions,
       include,
       exclude,
@@ -44,6 +45,7 @@ async function renderFile (p) {
     } = await getFile(p)
 
     await setFile(p, {
+      ...(doesExtend ? { extends: doesExtend } : {}),
       ...(compilerOptions ? { compilerOptions } : {}),
       ...(include ? { include } : {}),
       ...(exclude ? { exclude } : {}),
