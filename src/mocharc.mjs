@@ -20,22 +20,16 @@ function toPatterns (directory) {
   return [
     `${directory}/.mocharc`,
     `${directory}/.mocharc.json`,
-    `${directory}/*/.mocharc`,
-    `${directory}/*/.mocharc.json`,
-    `${directory}/**/*/.mocharc`,
-    `${directory}/**/*/.mocharc.json`,
+    `${directory}/**/.mocharc`,
+    `${directory}/**/.mocharc.json`,
     `!${directory}/node_modules/.mocharc`,
     `!${directory}/node_modules/.mocharc.json`,
-    `!${directory}/node_modules/*/.mocharc`,
-    `!${directory}/node_modules/*/.mocharc.json`,
-    `!${directory}/node_modules/**/*/.mocharc`,
-    `!${directory}/node_modules/**/*/.mocharc.json`,
-    `!${directory}/**/*/node_modules/.mocharc`,
-    `!${directory}/**/*/node_modules/.mocharc.json`,
-    `!${directory}/**/*/node_modules/*/.mocharc`,
-    `!${directory}/**/*/node_modules/*/.mocharc.json`,
-    `!${directory}/**/*/node_modules/**/*/.mocharc`,
-    `!${directory}/**/*/node_modules/**/*/.mocharc.json`
+    `!${directory}/node_modules/**/.mocharc`,
+    `!${directory}/node_modules/**/.mocharc.json`,
+    `!${directory}/**/node_modules/.mocharc`,
+    `!${directory}/**/node_modules/.mocharc.json`,
+    `!${directory}/**/node_modules/**/.mocharc`,
+    `!${directory}/**/node_modules/**/.mocharc.json`
   ]
 }
 
