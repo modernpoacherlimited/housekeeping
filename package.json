@@ -31,9 +31,9 @@
     "glob-all": "^3.3.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.5",
-    "@babel/eslint-parser": "^7.24.5",
-    "@babel/preset-env": "^7.24.5",
+    "@babel/core": "^7.24.6",
+    "@babel/eslint-parser": "^7.24.6",
+    "@babel/preset-env": "^7.24.6",
     "@modernpoacher/hooks": "^1.0.475",
     "core-js": "^3.37.1",
     "eslint": "8.57.0",
