@@ -27,7 +27,7 @@
   "dependencies": {
     "commander": "^12.1.0",
     "cross-env": "^7.0.3",
-    "debug": "^4.3.4",
+    "debug": "^4.3.5",
     "glob-all": "^3.3.1"
   },
   "devDependencies": {
