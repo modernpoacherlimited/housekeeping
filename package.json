@@ -11,22 +11,21 @@
   },
   "license": "ISC",
   "scripts": {
-    "start": "cross-env DEBUG=housekeeping* node app.mjs",
-    "start:package": "cross-env DEBUG=housekeeping* node package.mjs",
-    "start:depsrc": "cross-env DEBUG=housekeeping* node depsrc.mjs",
-    "start:eslintrc": "cross-env DEBUG=housekeeping* node eslintrc.mjs",
-    "start:mocharc": "cross-env DEBUG=housekeeping* node mocharc.mjs",
-    "start:jsconfig": "cross-env DEBUG=housekeeping* node jsconfig.mjs",
-    "start:tsconfig": "cross-env DEBUG=housekeeping* node tsconfig.mjs",
-    "start:babelrc": "cross-env DEBUG=housekeeping* node babelrc.mjs",
-    "start:stylelintrc": "cross-env DEBUG=housekeeping* node stylelintrc.mjs",
     "lint": "eslint . --ext .mjs,.cjs",
     "lint:fix": "npm run lint -- --fix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "start": "node app.mjs",
+    "start:babelrc": "node babelrc.mjs",
+    "start:depsrc": "node depsrc.mjs",
+    "start:eslintrc": "node eslintrc.mjs",
+    "start:jsconfig": "node jsconfig.mjs",
+    "start:mocharc": "node mocharc.mjs",
+    "start:package": "node package.mjs",
+    "start:stylelintrc": "node stylelintrc.mjs",
+    "start:tsconfig": "node tsconfig.mjs"
   },
   "dependencies": {
     "commander": "^12.1.0",
-    "cross-env": "^7.0.3",
     "debug": "^4.3.5",
     "glob-all": "^3.3.1"
   },

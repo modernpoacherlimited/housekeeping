@@ -23,6 +23,14 @@ import B from './src/babelrc.mjs'
 
 const log = debug('housekeeping')
 
+const {
+  env: {
+    DEBUG = 'housekeeping*'
+  }
+} = process
+
+if (DEBUG) debug.enable(DEBUG)
+
 log('`housekeeping` is awake')
 
 const commander = new Command()

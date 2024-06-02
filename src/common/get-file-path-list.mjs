@@ -7,11 +7,8 @@ const log = debug('housekeeping/common/get-file-path-list')
 log('`housekeeping` is awake')
 
 function dedupe (accumulator, p) {
-  return (
-    accumulator.includes(p)
-      ? accumulator
-      : accumulator.concat(p)
-  )
+  if (!accumulator.includes(p)) accumulator.push(p)
+  return accumulator
 }
 
 export default function getFilePathList (patterns = './*') {

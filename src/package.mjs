@@ -27,6 +27,19 @@ function toPatterns (directory) {
   ]
 }
 
+function sortEntries ([alpha], [omega]) {
+  return alpha.localeCompare(omega)
+}
+
+function byKeys (object) {
+  return (
+    Object.fromEntries(
+      Object.entries(object)
+        .sort(sortEntries)
+    )
+  )
+}
+
 async function renderFile (p, AUTHOR, REGEXP) {
   log('renderFile')
 
@@ -77,14 +90,14 @@ async function renderFile (p, AUTHOR, REGEXP) {
       ...(repository ? { repository } : {}),
       ...(homepage ? { homepage } : {}),
       ...(bugs ? { bugs } : {}),
-      ...(scripts ? { scripts } : {}),
-      ...(bin ? { bin } : {}),
+      ...(scripts ? { scripts: byKeys(scripts) } : {}),
+      ...(bin ? { bin: byKeys(bin) } : {}),
       ...(dependencies ? { dependencies } : {}),
       ...(devDependencies ? { devDependencies } : {}),
       ...(peerDependencies ? { peerDependencies } : {}),
       ...rest,
-      ...(imports ? { imports } : {}),
-      ...(exports ? { exports } : {}),
+      ...(imports ? { imports: byKeys(imports) } : {}),
+      ...(exports ? { exports: byKeys(exports) } : {}),
       ...(_moduleAliases ? { _moduleAliases } : {}),
       ...(husky ? { husky } : {})
     })
