@@ -36,7 +36,7 @@ log('`housekeeping` is awake')
 const commander = new Command()
 
 async function app () {
-  const PACKAGE = await getPackage('.')
+  const PACKAGE = await getPackage()
 
   const name = getPackageName(PACKAGE)
 

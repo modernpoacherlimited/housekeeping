@@ -58,7 +58,7 @@ async function app () {
     directory
   })
 
-  return await J(directory)
+  await J(directory)
 }
 
 export default app()

@@ -58,7 +58,7 @@ async function app () {
     directory
   })
 
-  return await S(directory)
+  await S(directory)
 }
 
 export default app()

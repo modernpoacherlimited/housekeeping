@@ -1,18 +1,20 @@
 import debug from 'debug'
 
-import getFilePathList from './common/get-file-path-list.mjs'
-import genFilePath from './common/gen-file-path.mjs'
-import toDirectory from './common/to-directory.mjs'
-import getFile from './common/get-file.mjs'
-import setFile from './common/set-file.mjs'
-import getPackages from './common/get-packages.mjs'
-import transform from './common/transform.mjs'
+import {
+  resolve,
+  dirname
+} from 'node:path'
 
-const MESSAGE = 'No error message defined'
+import getFilePaths from './common/get-file-paths.mjs'
+import genFilePath from './common/gen-file-path.mjs'
+import fromFile from './common/from-file.mjs'
+import toFile from './common/to-file.mjs'
+import toPackages from './common/to-packages.mjs'
+import handleError from './common/handle-error.mjs'
+import isString from './common/is-string.mjs'
 
 const log = debug('housekeeping/package')
 const info = debug('housekeeping/package:info')
-const error = debug('housekeeping/package:error')
 
 log('`housekeeping` is awake')
 
@@ -27,24 +29,27 @@ function toPatterns (directory) {
   ]
 }
 
-function sortEntries ([alpha], [omega]) {
-  return alpha.localeCompare(omega)
+function sortKeys ([alpha], [omega]) {
+  return (
+    alpha
+      .localeCompare(omega)
+  )
 }
 
 function byKeys (object) {
   return (
     Object.fromEntries(
       Object.entries(object)
-        .sort(sortEntries)
+        .sort(sortKeys)
     )
   )
 }
 
-async function renderFile (p, AUTHOR, REGEXP) {
+async function renderFile (filePath, AUTHOR, REGEXP) {
   log('renderFile')
 
   try {
-    info(p)
+    info(filePath)
 
     const {
       name,
@@ -72,9 +77,9 @@ async function renderFile (p, AUTHOR, REGEXP) {
       _moduleAliases,
       husky,
       ...rest
-    } = await getFile(p)
+    } = await fromFile(filePath)
 
-    await setFile(p, {
+    await toFile(filePath, {
       ...(name ? { name } : {}),
       ...(version ? { version } : {}),
       ...(description ? { description } : {}),
@@ -83,7 +88,7 @@ async function renderFile (p, AUTHOR, REGEXP) {
       ...(main ? { main } : {}),
       ...(type ? { type } : {}),
       ...(types ? { types } : {}),
-      ...(author ? (typeof author === 'string' && REGEXP.test(author)) ? { author: AUTHOR } : { author } : {}),
+      ...(author ? (isString(author) && REGEXP.test(author)) ? { author: AUTHOR } : { author } : {}),
       ...(contributors ? { contributors } : {}),
       ...(license ? { license } : {}),
       ...(engines ? { engines } : {}),
@@ -101,41 +106,35 @@ async function renderFile (p, AUTHOR, REGEXP) {
       ...(_moduleAliases ? { _moduleAliases } : {}),
       ...(husky ? { husky } : {})
     })
-  } catch ({
-    message = MESSAGE
-  }) {
-    error(message)
+  } catch (e) {
+    handleError(e)
   }
 }
 
 async function handlePackageDirectory (directory, author, regExp) {
   log('handlePackageDirectory')
 
-  const d = transform(directory)
+  const d = resolve(directory)
   try {
     info(d)
 
-    const a = await getFilePathList(toPatterns(d))
-    for (const p of genFilePath(a)) await renderFile(p, author, new RegExp(regExp))
-  } catch ({
-    message = MESSAGE
-  }) {
-    error(message)
+    const a = await getFilePaths(toPatterns(d))
+    for (const filePath of genFilePath(a)) await renderFile(filePath, author, new RegExp(regExp))
+  } catch (e) {
+    handleError(e)
   }
 }
 
 export default async function handleDirectory (directory, author, regExp) {
   log('handleDirectory')
 
-  const d = transform(directory)
+  const d = resolve(directory)
   try {
     info(d)
 
-    const a = await getPackages(d)
-    for (const p of genFilePath(a)) await handlePackageDirectory(toDirectory(p), author, regExp)
-  } catch ({
-    message = MESSAGE
-  }) {
-    error(message)
+    const a = await getFilePaths(toPackages(d))
+    for (const filePath of genFilePath(a)) await handlePackageDirectory(dirname(filePath), author, regExp)
+  } catch (e) {
+    handleError(e)
   }
 }

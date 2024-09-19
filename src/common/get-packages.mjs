@@ -1,6 +1,6 @@
 import debug from 'debug'
 
-import getFilePathList from './get-file-path-list.mjs'
+import getFilePaths from './get-file-paths.mjs'
 
 const log = debug('housekeeping/common/get-packages')
 
@@ -10,7 +10,7 @@ export default function getPackages (directory = '.') {
   log('getPackages')
 
   return (
-    getFilePathList([
+    getFilePaths([
       `${directory}/package.json`,
       `${directory}/*/package.json`
     ])

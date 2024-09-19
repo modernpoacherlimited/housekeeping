@@ -1,18 +1,19 @@
 import debug from 'debug'
 
-import getFilePathList from './common/get-file-path-list.mjs'
-import genFilePath from './common/gen-file-path.mjs'
-import toDirectory from './common/to-directory.mjs'
-import getFile from './common/get-file.mjs'
-import setFile from './common/set-file.mjs'
-import getPackages from './common/get-packages.mjs'
-import transform from './common/transform.mjs'
+import {
+  resolve,
+  dirname
+} from 'node:path'
 
-const MESSAGE = 'No error message defined'
+import getFilePaths from './common/get-file-paths.mjs'
+import genFilePath from './common/gen-file-path.mjs'
+import fromFile from './common/from-file.mjs'
+import toFile from './common/to-file.mjs'
+import toPackages from './common/to-packages.mjs'
+import handleError from './common/handle-error.mjs'
 
 const log = debug('housekeeping/mocharc')
 const info = debug('housekeeping/mocharc:info')
-const error = debug('housekeeping/mocharc:error')
 
 log('`housekeeping` is awake')
 
@@ -33,58 +34,52 @@ function toPatterns (directory) {
   ]
 }
 
-async function renderFile (p) {
+async function renderFile (filePath) {
   log('renderFile')
 
   try {
-    info(p)
+    info(filePath)
 
     const {
       'node-option': nodeOption,
       extension,
       ...rest
-    } = await getFile(p)
+    } = await fromFile(filePath)
 
-    await setFile(p, {
+    await toFile(filePath, {
       ...(nodeOption ? { 'node-option': nodeOption } : {}),
       ...(extension ? { extension } : {}),
       ...rest
     })
-  } catch ({
-    message = MESSAGE
-  }) {
-    error(message)
+  } catch (e) {
+    handleError(e)
   }
 }
 
 async function handlePackageDirectory (directory) {
   log('handlePackageDirectory')
 
-  const d = transform(directory)
+  const d = resolve(directory)
   try {
     info(d)
 
-    const a = await getFilePathList(toPatterns(d))
-    for (const p of genFilePath(a)) await renderFile(p)
-  } catch ({
-    message = MESSAGE
-  }) {
-    error(message)
+    const a = await getFilePaths(toPatterns(d))
+    for (const filePath of genFilePath(a)) await renderFile(filePath)
+  } catch (e) {
+    handleError(e)
   }
 }
 
 export default async function handleDirectory (directory) {
   log('handleDirectory')
 
-  const d = transform(directory)
+  const d = resolve(directory)
   try {
     info(d)
 
-    const a = await getPackages(d)
-    for (const p of genFilePath(a)) await handlePackageDirectory(toDirectory(p))
-  } catch ({
-    message = MESSAGE
-  }) {
-    error(message)
+    const a = await getFilePaths(toPackages(d))
+    for (const filePath of genFilePath(a)) await handlePackageDirectory(dirname(filePath))
+  } catch (e) {
+    handleError(e)
   }
 }

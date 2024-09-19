@@ -11,7 +11,7 @@
   },
   "license": "ISC",
   "scripts": {
-    "lint": "eslint . --ext .mjs,.cjs",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "prepare": "husky",
     "start": "node app.mjs",
@@ -33,10 +33,10 @@
     "@babel/core": "^7.25.2",
     "@babel/eslint-parser": "^7.25.1",
     "@babel/preset-env": "^7.25.4",
+    "@sequencemedia/eslint-config-standard": "^0.0.69",
     "@modernpoacher/hooks": "^1.0.495",
     "core-js": "^3.38.1",
-    "eslint": "8.57.0",
-    "eslint-config-standard": "^17.1.0",
+    "eslint": "^9.10.0",
     "husky": "^9.1.6"
   }
 }

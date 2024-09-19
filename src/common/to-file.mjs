@@ -1,13 +1,15 @@
 import debug from 'debug'
 
-import { writeFile } from 'fs/promises'
+import {
+  writeFile
+} from 'fs/promises'
 
-const log = debug('housekeeping/common/set-file')
+const log = debug('housekeeping/common/to-file')
 
 log('`housekeeping` is awake')
 
-export default async function setFile (filePath, o) {
-  log('setFile')
+export default async function toFile (filePath, o) {
+  log('toFile')
 
   const fileData = JSON.stringify(o, null, 2).concat('\n')
 

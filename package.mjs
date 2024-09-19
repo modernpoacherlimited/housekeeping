@@ -67,7 +67,7 @@ async function app () {
     regexp
   })
 
-  return await P(directory, author, regexp)
+  await P(directory, author, regexp)
 }
 
 export default app()
