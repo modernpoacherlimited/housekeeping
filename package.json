@@ -34,7 +34,7 @@
     "@babel/eslint-parser": "^7.25.1",
     "@babel/preset-env": "^7.25.4",
     "@modernpoacher/hooks": "^1.0.495",
-    "@sequencemedia/eslint-config-standard": "^0.0.69",
+    "@sequencemedia/eslint-config-standard": "^0.0.70",
     "core-js": "^3.38.1",
     "eslint": "^9.11.1",
     "husky": "^9.1.6"
